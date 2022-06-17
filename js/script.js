@@ -1,13 +1,18 @@
 function register() {
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
+    let name = document.getElementById('name').value;
+    let phone = document.getElementById('phone').value;
+    let email = document.getElementById('email').value;
     let users, currentUser;
     if (localStorage.getItem('users') == null) {
         users = {};
+        user_info = {};
         currentUser = '';
     }
     else {
         users = JSON.parse(localStorage.getItem('users'));
+        user_info = JSON.parse(localStorage.getItem('user_info'));
         currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     if (username.length > 0 && password.length > 0) {
@@ -25,8 +30,14 @@ function register() {
         }
         else {
             users[username] = password;
+            user_info[username] = {
+                'name': name,
+                'email': email,
+                'phone': phone,
+            }
             currentUser = username;
             localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('user_info', JSON.stringify(user_info));
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             swal({
                 title: "Account Created",
